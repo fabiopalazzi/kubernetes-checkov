@@ -1,7 +1,7 @@
 # Kubetcl and docker commands:
 1. docker push <local:image>
   * Before run: docker login to access to pdocker hub repo
-2. minikube start
+2. minikube start --memory 2048 --cpus 2
   * Init minikube to install kubernetes configuration locally
 3. 
   * cd kube
@@ -14,7 +14,5 @@
   * Show created lb with: kubectl get svc
 6. minikube service <load-balancer-name> to get url and port of load balancer
 
-7. Checkov commands
-  * kubectl apply -f https://raw.githubusercontent.com/bridgecrewio/checkov/master/kubernetes/checkov-job.yaml
-  * kubectl get jobs -n checkov
-  * kubectl logs job/checkov -n checkov
+7. Checkov command (first install checkov with pip)
+  * checkov -d . --framework kubernetes
