@@ -1,4 +1,4 @@
-#!/home/fabio/Scrivania/kubernetes-checkov/env/bin/python3.9
+#!/home/fabio/Scrivania/kubernetes-checkov/flask/env/bin/python3.9
 # -*- coding: utf-8 -*-
 import re
 import sys
