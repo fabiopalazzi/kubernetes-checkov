@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://mongo.default.svc.cluster.local:27017/db"
+app.config["MONGO_URI"] = "mongodb://mongodb-service.default.svc.cluster.local:27017/db"
 mongo = PyMongo(app)
 db = mongo.db
 
@@ -28,15 +29,66 @@ def get_all_notes():
 def create_note():
     data = request.get_json(force=True)
     inserted_note = {}
+    empty = True
     if data.get("title") is not None:
+        empty=False
         inserted_note["title"] = data["title"]
     if data.get("body") is not None:
+        empty=False
         inserted_note["body"] = data["body"]
     
-    db.note.insert_one(inserted_note)
+    if empty:
+        return jsonify(
+            message="note is empty!"
+        )
 
+    db.note.insert_one(inserted_note)
     return jsonify(
         message="note saved successfully!"
+    )
+
+@app.route("/note", methods=["PUT"])
+def update_note():
+    data = request.get_json(force=True)
+    updated_note = {}
+
+    if data.get("id") is None:
+        return jsonify(
+            message="Error, Id is not specified!"
+        )
+
+    empty = True
+    if data.get("title") is not None:
+        empty=False
+        updated_note["title"] = data["title"]
+    if data.get("body") is not None:
+        empty=False
+        updated_note["body"] = data["body"]
+    
+    if empty:
+        return jsonify(
+            message="note is empty!"
+        )
+
+    db.note.update_one({"_id": ObjectId(data.get("id"))}, {"$set": updated_note})
+
+    return jsonify(
+        message="note updated successfully!"
+    )
+
+@app.route("/note", methods=["DELETE"])
+def delete_note():
+    
+    id = request.args.get("id")
+    if id is None:
+        return jsonify(
+            message="Error, Id is not specified!"
+        )
+
+    db.note.delete_one({"_id": ObjectId(id)})
+
+    return jsonify(
+        message="note deleted successfully!"
     )
 
 if __name__ == "__main__":

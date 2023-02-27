@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/fabio/Scrivania/kubernetes-checkov/flask/env"
+VIRTUAL_ENV="/home/fabio/Desktop/kubernetes-checkov/flask/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

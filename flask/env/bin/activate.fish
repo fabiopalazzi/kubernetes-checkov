@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/fabio/Scrivania/kubernetes-checkov/flask/env"
+set -gx VIRTUAL_ENV "/home/fabio/Desktop/kubernetes-checkov/flask/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
