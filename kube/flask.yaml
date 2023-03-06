@@ -18,6 +18,13 @@ spec:
         - name: flask
           image: fabiopalazzii/kubernetes-sample:flask@sha256:3d3d106d9c1f271abaa3933474241613f6083795d3c1aefc0e5189f5ff3eb863
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "400Mi"
+              cpu: "0.4"
+            requests:
+              memory: "200Mi"
+              cpu: "0.2"
           ports:
             - containerPort: 5000
       imagePullSecrets:
