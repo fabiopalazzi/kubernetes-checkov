@@ -32,11 +32,11 @@ spec:
           ports:
             - containerPort: 27017
           volumeMounts:
-            - name: mongodb-persistent-storage-claim
+            - name: mongodb-pvc
               mountPath: /data/db
   volumeClaimTemplates:
   - metadata:
-      name: mongodb-persistent-storage-claim
+      name: mongodb-pvc
       annotations:
         volume.beta.kubernetes.io/storage-class: "standard"
     spec:
