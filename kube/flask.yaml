@@ -17,6 +17,8 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: flask
           image: fabiopalazzii/kubernetes-sample:flask@sha256:3d3d106d9c1f271abaa3933474241613f6083795d3c1aefc0e5189f5ff3eb863
