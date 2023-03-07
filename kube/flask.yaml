@@ -23,6 +23,7 @@ spec:
           image: fabiopalazzii/kubernetes-sample:flask@sha256:3d3d106d9c1f271abaa3933474241613f6083795d3c1aefc0e5189f5ff3eb863
           securityContext: 
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
           livenessProbe:
             httpGet:
               path: /
