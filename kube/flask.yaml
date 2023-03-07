@@ -15,8 +15,7 @@ spec:
         app: flask
     spec:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 3000
+        runAsUser: 10001
         seccompProfile:
           type: RuntimeDefault
       containers:
