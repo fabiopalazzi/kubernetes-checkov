@@ -23,6 +23,12 @@ spec:
       containers:
         - name: mongod-container
           image: mongo
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - 'mongosh --eval "rs.status()" | grep -v -e "state: 6|\state: 8\|state: 10"'
           command:
             - "mongod"
             - "--bind_ip"
