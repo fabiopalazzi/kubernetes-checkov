@@ -30,6 +30,14 @@ spec:
             timeoutSeconds: 2
             periodSeconds: 30
             failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 10
+            failureThreshold: 3
           imagePullPolicy: Always
           resources:
             limits:
