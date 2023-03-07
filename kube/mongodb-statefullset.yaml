@@ -23,6 +23,8 @@ spec:
       containers:
         - name: mongod-container
           image: mongo:6.0.4@sha256:3c8dd1b08f8a2ec0338902affd432b40130e5acf49d6e3a1ca05ff5168100059
+          securityContext: 
+            allowPrivilegeEscalation: false
           livenessProbe:
             exec:
               command:
