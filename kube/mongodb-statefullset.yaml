@@ -16,6 +16,7 @@ spec:
         environment: dev
         replicaset: MainRepSet
     spec:
+      automountServiceAccountToken: false
       securityContext:
         runAsUser: 0
         seccompProfile:
