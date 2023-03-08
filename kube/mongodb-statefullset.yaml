@@ -27,6 +27,9 @@ spec:
           imagePullPolicy: Always
           securityContext: 
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           livenessProbe:
             exec:
               command:
