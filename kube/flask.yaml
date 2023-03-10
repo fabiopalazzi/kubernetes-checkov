@@ -5,7 +5,7 @@ metadata:
   labels:
     app: flask
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: flask
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:3d3d106d9c1f271abaa3933474241613f6083795d3c1aefc0e5189f5ff3eb863
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:78b271e8452b32a8ce636fe3169c75e36b262fd33292e028661d7ebfb9fd3513
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
