@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import os
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://mongodb-service.checkov-project.svc.cluster.local:27017/db"
+app.config["MONGO_URI"] = "mongodb://mongodb-service." + os.environ['NAMESPACE'] + ".svc.cluster.local:27017/db"
 mongo = PyMongo(app)
 db = mongo.db
 
