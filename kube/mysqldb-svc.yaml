@@ -1,16 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: mysql-svc
+  labels:
+    delete: "true"
 spec:
   externalTrafficPolicy: "Local"
   selector:
     app: mysql
   ports:
   - name: mysql
-    port: 27017
+    port: 3306
     protocol: TCP
-    targetPort: 27017
+    targetPort: 3306
     nodePort: 32000
   type: NodePort
 status:

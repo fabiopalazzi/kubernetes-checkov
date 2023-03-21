@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deployment
+  labels:
+    delete: "true"
 spec:
   replicas: 1
   selector:

@@ -2,6 +2,8 @@
 
 FROM python:3.9-slim-buster
 
+ENV PYTHONUNBUFFERED=0
+
 EXPOSE 5000
 
 WORKDIR /python
