@@ -2,7 +2,7 @@
 kubectl create namespace checkov-project
 
 # Create kube resource declared
-kubectl create -f .
+kubectl apply -f .
 
 # Wait mongo db replica is running
 kubectl -n checkov-project wait --for=condition=Ready pod/mongod-0

@@ -22,7 +22,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:4394d579c47383832d1a1b57342993eefcab53411cdf39b9f94dab6000886442
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:bd8383b2025f3fc4ddbea36bf20d4319b6ab6693cdfbb2fec4e2ffe9e3644e16
           env:
             - name: NAMESPACE
               value: checkov-project

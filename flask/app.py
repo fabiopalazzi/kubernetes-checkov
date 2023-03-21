@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from datetime import datetime
 import os
 
 app = Flask(__name__)
@@ -10,7 +11,7 @@ db = mongo.db
 
 @app.route('/')
 def hello_geek():
-    return '<h1>Hello from Flask & Docker & Kubernetes</h2>'
+    return '<h1>Hello from Flask</h2>'
 
 @app.route("/notes", methods=["GET"])
 def get_all_notes():
@@ -20,7 +21,9 @@ def get_all_notes():
         item = {
             "id": str(note["_id"]),
             "title": note["title"] if note.get("title") is not None else "",
-            "body": note["body"] if note.get("body") is not None else ""
+            "body": note["body"] if note.get("body") is not None else "",
+            "created_at": note["created_at"] if note.get("created_at") is not None else "",
+            "updated_at": note["updated_at"] if note.get("updated_at") is not None else ""
         }
         data.append(item)
     return jsonify(
@@ -29,7 +32,10 @@ def get_all_notes():
 @app.route("/note", methods=["POST"])
 def create_note():
     data = request.get_json(force=True)
-    inserted_note = {}
+    inserted_note = {
+        "created_at": str(datetime.now()),
+        "updated_at": None
+    }
     empty = True
     if data.get("title") is not None:
         empty=False
@@ -51,7 +57,9 @@ def create_note():
 @app.route("/note", methods=["PUT"])
 def update_note():
     data = request.get_json(force=True)
-    updated_note = {}
+    updated_note = {
+        "updated_at": str(datetime.now())
+    }
 
     if data.get("id") is None:
         return jsonify(
