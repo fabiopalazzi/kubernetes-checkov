@@ -9,18 +9,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@mysql-svc.def
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    read = db.Column(db.Boolean, default=False)
+    write = db.Column(db.Boolean, default=False)
+    admin = db.Column(db.Boolean, default=False)
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
 
 with app.app_context():
     db.create_all()
+
 
 @app.route('/test')
 def testdb():
