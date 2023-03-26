@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy.sql import func
@@ -19,6 +19,14 @@ class User(db.Model):
     write = db.Column(db.Boolean, default=False)
     admin = db.Column(db.Boolean, default=False)
 
+    def __int__(self, id, username, email, read, write, admin):
+        self.id = id
+        self.username = username
+        self.email = email
+        self.read = read
+        self.write = write
+        self.admin = admin
+
 
 with app.app_context():
     db.create_all()
@@ -35,17 +43,65 @@ def testdb():
 
 
 @app.route("/users", methods=["GET"])
-def get_all_notes():
-    users = db.query(User).all()
+def get_all_users():
+    users = User.query.all()
     data = []
     for user in users:
         item = {
-            "id": user[0],
-            "title": user[1] if user[1] is not None else "",
-            "body": user[2] if user[2] is not None else ""
+            "id": user.id,
+            "username": user.username if user.username is not None else "",
+            "email": user.email if user.email is not None else "",
+            "read": user.read if user.read is not None else "",
+            "write": user.write if user.write is not None else "",
+            "admin": user.admin if user.admin is not None else ""
         }
         data.append(item)
     return jsonify(data=data)
+
+
+@app.route("/add_users", methods=["POST"])
+def add_users():
+    username = request.json['username']
+    email = request.json['email']
+    read = request.json["read"]
+    write = request.json["write"]
+    admin = request.json["admin"]
+
+    new_user = User(username=username, email=email, read=read, write=write, admin=admin)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User added successfully!'}), 201
+
+
+@app.route("/set_permissions/<string:username>", methods=["PUT"])
+def set_permissions(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    data = request.json
+    user.read = data["read"] if "read" in data else user.read
+    user.write = data["write"] if "write" in data else user.write
+    user.admin = data["admin"] if "admin" in data else user.admin
+
+    db.session.commit()
+
+    return jsonify({'message': 'User updated successfully!'}), 201
+
+
+@app.route("/delete_users/<string:username>", methods=["DELETE"])
+def delete_users(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({'message': 'User deleted successfully!'}), 201
 
 
 if __name__ == "__main__":

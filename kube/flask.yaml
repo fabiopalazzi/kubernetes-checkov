@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:cd781e6bbb164193b807bfabc1f7acc27594d1f6fd4e19730421c0c560b16be5
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:b2237f5a4577114d32221a8cb28dd9b001e898e218718805b787f15c2e6896cd
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
