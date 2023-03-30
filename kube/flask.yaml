@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask
+  namespace: checkov-project
   labels:
     app: flask
     delete: "true"
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:b2237f5a4577114d32221a8cb28dd9b001e898e218718805b787f15c2e6896cd
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:d49d17d9220849ea7f9e7bf9b87fde2802f87be5e7e87b143a2867a7c4469bbd
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
