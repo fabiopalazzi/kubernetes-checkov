@@ -18,6 +18,8 @@ spec:
       containers:
         - name: mysql
           image: docker.io/library/mysql@sha256:d8dc78532e9eb3759344bf89e6e7236a34132ab79150607eb08cc746989aa047
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: root
