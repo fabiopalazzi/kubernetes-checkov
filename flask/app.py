@@ -33,6 +33,11 @@ with app.app_context():
     db.create_all()
 
 
+@app.route('/')
+def hello_geek():
+    return '<h1>Ciao</h2>'
+
+
 @app.route('/test')
 def testdb():
     try:

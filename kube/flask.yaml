@@ -18,7 +18,29 @@ spec:
     spec:
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:d49d17d9220849ea7f9e7bf9b87fde2802f87be5e7e87b143a2867a7c4469bbd
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:91046688d7e1d66166ef35cbdbd8fad2ebfad019acbb936876449dc86864b1bb
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 10
+            failureThreshold: 3
+          imagePullPolicy: Always
           resources:
             limits:
               memory: "400Mi"
@@ -26,20 +48,6 @@ spec:
             requests:
               memory: "200Mi"
               cpu: "0.2"
-          livenessProbe:
-            httpGet:
-              path: /test
-              port: 5000
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 30
-            failureThreshold: 2
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-          imagePullPolicy: Always
           ports:
             - containerPort: 5000
       imagePullSecrets:
