@@ -19,6 +19,13 @@ spec:
       containers:
         - name: flask
           image: fabiopalazzii/kubernetes-sample:flask@sha256:d49d17d9220849ea7f9e7bf9b87fde2802f87be5e7e87b143a2867a7c4469bbd
+          resources:
+            limits:
+              memory: "400Mi"
+              cpu: "0.4"
+            requests:
+              memory: "200Mi"
+              cpu: "0.2"
           livenessProbe:
             httpGet:
               path: /test
