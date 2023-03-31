@@ -36,6 +36,9 @@ spec:
             failureThreshold: 2
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
