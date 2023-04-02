@@ -17,7 +17,7 @@ spec:
         app: flask
     spec:
       securityContext:
-        runAsUser: 1000
+        runAsUser: 10001
       containers:
         - name: flask
           image: fabiopalazzii/kubernetes-sample:flask@sha256:91046688d7e1d66166ef35cbdbd8fad2ebfad019acbb936876449dc86864b1bb
