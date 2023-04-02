@@ -15,6 +15,8 @@ spec:
       labels:
         app: mysql
     spec:
+      securityContext:
+        runAsUser: 0
       containers:
         - name: mysql
           image: docker.io/library/mysql@sha256:d8dc78532e9eb3759344bf89e6e7236a34132ab79150607eb08cc746989aa047
@@ -42,11 +44,21 @@ spec:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
           livenessProbe:
-            exec:
-              command: [ "mysqladmin", "ping" ]
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 3306
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
