@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask
+  namespace: checkov-project
   labels:
     app: flask
+    delete: "true"
 spec:
   replicas: 1
   selector:
@@ -14,10 +16,46 @@ spec:
       labels:
         app: flask
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:78b271e8452b32a8ce636fe3169c75e36b262fd33292e028661d7ebfb9fd3513
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:91046688d7e1d66166ef35cbdbd8fad2ebfad019acbb936876449dc86864b1bb
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "400Mi"
+              cpu: "0.4"
+            requests:
+              memory: "200Mi"
+              cpu: "0.2"
           ports:
             - containerPort: 5000
       imagePullSecrets:

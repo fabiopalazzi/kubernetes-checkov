@@ -1,3 +1,6 @@
+# Create a namespace
+kubectl create namespace checkov-project
+
 #Create kube resource declared
 kubectl create -f .
 
@@ -8,4 +11,4 @@ kubectl wait --for=condition=Running pod/mongod-0
 ./config/init_mongo.sh
 
 #Show minikube page of flask load balancer
-minikube service flask-lb
+minikube service flask-lb -n checkov-project

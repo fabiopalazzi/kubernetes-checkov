@@ -1,1 +1,1 @@
-kubectl delete -f .
+kubectl delete -f . -l delete=true
