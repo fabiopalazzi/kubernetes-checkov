@@ -14,7 +14,7 @@ spec:
     port: 3306
     protocol: TCP
     targetPort: 3306
-    nodePort: 32000
+    nodePort: 32020
   type: NodePort
 status:
   loadBalancer: {}
