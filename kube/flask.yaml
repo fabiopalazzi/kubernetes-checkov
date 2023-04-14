@@ -21,11 +21,6 @@ spec:
         runAsUser: 10001
         seccompProfile:
           type: RuntimeDefault
-      automountServiceAccountToken: false
-      securityContext:
-        runAsUser: 10001
-        seccompProfile:
-          type: RuntimeDefault
       containers:
         - name: flask
           image: fabiopalazzii/kubernetes-sample:flask@sha256:18225b76108a5907790d73f9f87dedbc58fb59cef12bb426c7de520bac9420a3
