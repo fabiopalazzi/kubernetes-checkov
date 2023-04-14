@@ -21,10 +21,18 @@ spec:
         runAsUser: 10001
         seccompProfile:
           type: RuntimeDefault
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: flask
-          image: fabiopalazzii/kubernetes-sample:flask@sha256:91046688d7e1d66166ef35cbdbd8fad2ebfad019acbb936876449dc86864b1bb
-          securityContext:
+          image: fabiopalazzii/kubernetes-sample:flask@sha256:bd8383b2025f3fc4ddbea36bf20d4319b6ab6693cdfbb2fec4e2ffe9e3644e16
+          env:
+            - name: NAMESPACE
+              value: checkov-project
+          securityContext: 
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
@@ -34,28 +42,18 @@ spec:
             httpGet:
               path: /
               port: 5000
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            periodSeconds: 20
-            successThreshold: 1
-            failureThreshold: 3
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 2
           readinessProbe:
             httpGet:
               path: /
               port: 5000
             initialDelaySeconds: 5
-            timeoutSeconds: 5
+            timeoutSeconds: 3
             periodSeconds: 10
-            successThreshold: 1
             failureThreshold: 3
-          imagePullPolicy: Always
-          resources:
-            limits:
-              memory: "400Mi"
-              cpu: "0.4"
-            requests:
-              memory: "200Mi"
-              cpu: "0.2"
           ports:
             - containerPort: 5000
       imagePullSecrets:
