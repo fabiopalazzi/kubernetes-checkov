@@ -24,6 +24,7 @@ spec:
       containers:
         - name: flask
           image: fabiopalazzii/kubernetes-sample:flask@sha256:981cbc55b174144da6860d00eb7b7258fb076e26dcdeeb9ed3cb4db8aff1788e
+          imagePullPolicy: Always
           env:
             - name: NAMESPACE
               value: checkov-project
@@ -49,6 +50,13 @@ spec:
             timeoutSeconds: 3
             periodSeconds: 10
             failureThreshold: 3
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: 100Mi
+            limits:
+              cpu: "1"
+              memory: 200Mi
           ports:
             - containerPort: 5000
       imagePullSecrets:
