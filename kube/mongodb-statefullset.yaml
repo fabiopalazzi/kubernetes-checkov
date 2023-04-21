@@ -3,6 +3,8 @@ kind: StatefulSet
 metadata:
   name: mongod
   namespace: checkov-project
+  labels:
+    delete: "true"
 spec:
   serviceName: mongodb-service
   replicas: 3

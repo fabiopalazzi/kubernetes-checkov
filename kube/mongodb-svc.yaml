@@ -5,6 +5,7 @@ metadata:
   namespace: checkov-project
   labels:
     name: mongo
+    delete: "true"
 spec:
   ports:
   - port: 27017
